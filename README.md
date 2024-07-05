@@ -47,4 +47,4 @@ The project successfully sorts materials with high accuracy, improving the effic
 Contributions are welcome! Please open an issue or submit a pull request with your suggestions and improvements.
 
 ## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/Zulqarnain-10/Advanced-Material-Classification-Using-Sensor-Fusion-Machine-Learning/blob/main/LICENSE.txt) file for details.
