@@ -1,50 +1,67 @@
-# Advanced Material Classification Using Sensor Fusion & Machine Learning
+# Advanced Material Classification — Sensor Fusion + CNN
 
-## Overview
-This project integrates IR sensors, metal proximity sensors, color sensors, and load cells with a Convolutional Neural Network (CNN) to accurately sort materials such as metals, plastics, and glass. Developed as a final-year project, it aims to optimize recycling processes, enhance accuracy, and support environmental sustainability.
+![Python](https://img.shields.io/badge/Python-3.x-3776AB?logo=python&logoColor=white)
+![TensorFlow](https://img.shields.io/badge/TensorFlow-CNN-FF6F00?logo=tensorflow&logoColor=white)
+![Keras](https://img.shields.io/badge/Keras-deep%20learning-D00000?logo=keras&logoColor=white)
+![Raspberry Pi](https://img.shields.io/badge/Raspberry%20Pi-hardware-A22846?logo=raspberrypi&logoColor=white)
+![Arduino](https://img.shields.io/badge/Arduino-control-00979D?logo=arduino&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-green)
 
-## Directory Structure
-- **CNN Model**: Contains the Convolutional Neural Network model files.
-- **CNNModelTraining**: Jupyter Notebook for training the CNN model.
-- **Datasheets**: Technical datasheets for the sensors and components used.
-- **Final Project Report**: The final report detailing the project development and results.
-- **FlapControlSystem**: Code related to the control system for sorting flaps.
-- **Flowcharts & Block Diagrams**: Visual representations of the project design.
-- **Images**: Images used in the dataset and documentation.
-- **MaterialSortSignal**: Code for signal processing related to material sorting.
-- **SensorFusionModelTraining**: Scripts and notebooks for training the sensor fusion models.
-- **Videos**: Demonstration videos of the project in action.
+> An automated recycling sorter that classifies materials — metal, plastic, glass — by fusing multi-sensor readings with a CNN, built end-to-end with real hardware as a final-year capstone.
 
-## Dataset
-The dataset used for training and testing can be downloaded from the following link:
-[Download Dataset](https://drive.google.com/file/d/1zLjwx7HyiJ9iWzKVWlQKtAgT0XEnE_bh/view?usp=sharing)
+## Problem
 
-## Installation
-1. Clone the repository:
-   git clone https://github.com/Zulqarnain-10/Advanced-Material-Classification-Using-Sensor-Fusion-Machine-Learning.git
-2. Navigate to the project directory:
-   cd Advanced-Material-Classification-Using-Sensor-Fusion-Machine-Learning
-3. Install the required dependencies:
-   pip install -r requirements.txt
+Recycling streams mix metals, plastics, and glass, and manual sorting is slow and error-prone. A practical sorter must identify material type reliably from low-cost sensors and actuate a sorting mechanism in real time.
 
-## Usage
-### Training the CNN Model
-1. Navigate to the `CNNModelTraining` directory:
-   cd CNNModelTraining
-2. Open and run the Jupyter Notebook `CNNModelTraining.ipynb` to train the model.
+## Approach
 
-### Running the System
-1. Ensure all sensors and hardware are connected as per the schematics.
-2. Run the main control scripts
+Two complementary models run on a Raspberry Pi + Arduino rig:
 
-## Documentation
-Refer to the `Final Project Report` for detailed information on the project's development, implementation, and results.
+- **CNN vision model** (TensorFlow / Keras) — classifies material from camera images, trained on a **custom dataset** captured under varied lighting and angles with a **70/30 train/test split**.
+- **Sensor-fusion model** — combines **IR**, **metal-proximity**, **color (TCS3200)**, and **load-cell (HX711)** readings to disambiguate cases the camera alone can't (e.g., clear plastic vs. glass).
+- **Actuation** — an Arduino **flap-control system** routes each item to the correct bin based on the prediction.
 
 ## Results
-The project successfully sorts materials with high accuracy, improving the efficiency of recycling processes. Detailed results and performance metrics can be found in the `Final Project Report`.
 
-## Contributing
-Contributions are welcome! Please open an issue or submit a pull request with your suggestions and improvements.
+- The CNN reaches **~96% classification accuracy** on the custom dataset (validation accuracy ranges ~92–100% across epochs — see [`CNNModelTraining/CNNModelTraining.ipynb`](CNNModelTraining/CNNModelTraining.ipynb)).
+- Real-time predictions demonstrated live on hardware for metal, plastic, and glass (see demo videos in `Videos/`).
+- Full methodology, schematics, and results documented in the [Final Project Report](Final%20Project%20Report/).
+
+## Tech stack
+
+`Python` · `TensorFlow` · `Keras` · `NumPy` · `Pandas` · `Raspberry Pi` · `Arduino (C/C++)` · sensors: `IR` · `metal proximity` · `TCS3200 color` · `HX711 load cell`
+
+## Demo
+
+Demonstration videos (metal / plastic / glass detection) and hardware photos are in [`Videos/`](Videos/) and [`Images/`](Images/). Hardware and software block diagrams are in [`Flowcharts & Block Diagrams/`](Flowcharts%20&%20Block%20Diagrams/).
+
+## Repository structure
+
+| Path | Contents |
+| --- | --- |
+| `CNNModelTraining/` | CNN training notebook + script |
+| `SensorFusionModelTraining/` | Sensor-fusion model training |
+| `CNN Model/` | Saved trained model (`.h5`) |
+| `Datasets/` | Per-material sensor datasets (CSV) |
+| `FlapControlSystem/` | Arduino sorting-flap controller (`.ino`) |
+| `MaterialSortSignal/` | Signal-processing for sorting |
+| `Datasheets/` | Sensor & component datasheets |
+| `Final Project Report/` | Full capstone report (PDF) |
+
+## How to run
+
+**Train the CNN**
+
+```bash
+pip install -r requirements.txt
+# Download the dataset (link below), then open and run:
+#   CNNModelTraining/CNNModelTraining.ipynb
+```
+
+Dataset: [Google Drive](https://drive.google.com/file/d/1zLjwx7HyiJ9iWzKVWlQKtAgT0XEnE_bh/view?usp=sharing)
+
+**Run on hardware** — wire the sensors and actuators per the schematics in `Flowcharts & Block Diagrams/`, flash the Arduino sketch in `FlapControlSystem/`, then run the control scripts on the Raspberry Pi.
 
 ## License
-This project is licensed under the MIT License - see the [LICENSE](https://github.com/Zulqarnain-10/Advanced-Material-Classification-Using-Sensor-Fusion-Machine-Learning/blob/main/LICENSE.txt) file for details.
+
+MIT — see [LICENSE.txt](LICENSE.txt).
