@@ -1,4 +1,4 @@
-# CNN Model Training
+A# CNN Model Training
 
 This directory contains the files related to training the Convolutional Neural Network (CNN) model for the project "Advanced Material Classification Using Sensor Fusion & Machine Learning".
 
